@@ -5,30 +5,37 @@
 //4. Product 기능 테스트 코드 작성
 package com.imform.demo.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 
 @Entity
 @Getter
-@Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    private String content;
+  private String userId;
 
-    @Override
-    public String toString() {
-        String id = "id";
-        String content = "content";
+  private String content;
 
-        return String.format(
-            "Product -> Id: " + "%s, content: %s", id, content
-        );
-    }
+  private String description;
+
+  public void change(Product source) {
+    this.userId = source.getUserId();
+    this.content = source.getContent();
+    this.description = source.getDescription();
+  }
 }

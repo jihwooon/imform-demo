@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    profiles: mariadb
+    url: jdbc:mariadb://mariadb:3306/test
+    username: root
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update

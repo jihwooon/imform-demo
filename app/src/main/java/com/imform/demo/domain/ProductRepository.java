@@ -11,14 +11,14 @@ import java.util.Optional;
 
 public interface ProductRepository {
 
-    List<Product> findAll();
+  List<Product> findAll();
 
-    Optional<Product> findById(Long id);
+  Optional<Product> findById(Long id);
 
-    Product save(Product product);
+  Product save(Product product);
 
-    void delete(Product product);
+  void delete(Product product);
 
-    void deleteAll();
+  void deleteAll();
 
 }

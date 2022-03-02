@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @DisplayName("ProductRepository 클래스")
-class ProductRepositoryTest {
+class ProductRepository_클래스 {
 
     @Autowired
     private ProductRepository productRepository;
@@ -33,9 +33,10 @@ class ProductRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        product = new Product();
-        product.setId(1L);
-        product.setContent("HelloWorld");
+        product = Product.builder()
+            .id(1L)
+            .content("HelloWorld")
+            .build();
     }
 
     @Nested
@@ -53,7 +54,7 @@ class ProductRepositoryTest {
 
     @Nested
     @DisplayName("ListAll 메서드")
-    class Describe_ListAll {
+    class ListAll_메서드 {
 
         @BeforeEach
         void prepare() {
@@ -74,7 +75,7 @@ class ProductRepositoryTest {
 
     @DisplayName("Product 저장 성공()")
     @Test
-    void saveWithExistedProduct() {
+    void Product_저장_성공() {
         Product result = productRepository.save(product);
 
         assertThat(result.getId()).isEqualTo(1L);
@@ -83,7 +84,7 @@ class ProductRepositoryTest {
 
     @DisplayName("Product 저장 실패()")
     @Test
-    void saveWithNotExistedProduct() {
+    void Product_저장_실패_(){
         Product result = productRepository.save(product);
 
         assertThat(result.getId()).isNotEqualTo(100L);

@@ -14,15 +14,17 @@ class ProductTest {
 
     @BeforeEach
     void setUp() {
-        product = new Product();
-        product.setId(1L);
-        product.setContent("HelloWorld");
+        product = Product.builder()
+            .id(1L)
+            .content("내용")
+            .description("설명")
+            .build();
     }
 
     @DisplayName("Content 실수값")
     @Test
     void getWithCorrectTitle() {
-        assertThat(product.getContent()).isEqualTo("HelloWorld");
+        assertThat(product.getContent()).isEqualTo("내용");
     }
 
     @DisplayName("Content 허수값")
@@ -49,6 +51,16 @@ class ProductTest {
         @Test
         void it_throw_ProductNotFoundException() {
             assertThat(product.getId()).isNotEqualTo(100L);
+        }
+    }
+
+    @Nested
+    @DisplayName("String Description 값이 들어간다면")
+    class Context_when_Existent_Content {
+        @DisplayName("Description 값을 리턴한다.")
+        @Test
+        void it_return_get_Descirbe() {
+            assertThat(product.getDescription()).isEqualTo("설명");
         }
     }
 }

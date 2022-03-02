@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/test
+    username: root
+    password: root1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+#  docker run -d --name mariadb
+#    -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root1234
+#    -e MYSQL_DATABASE=test
+#    mariadb
+#    --character-set-server=utf8mb4
+#    --collation-server=utf8mb4_unicode_ci

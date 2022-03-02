@@ -8,6 +8,7 @@ package com.imform.demo.application;
 
 import com.imform.demo.domain.Product;
 import com.imform.demo.domain.ProductRepository;
+import com.imform.demo.dto.ProductData;
 import com.imform.demo.error.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -16,38 +17,48 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    private final ProductRepository productRepository;
+  private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+  public ProductService(ProductRepository productRepository) {
+    this.productRepository = productRepository;
+  }
 
-    public List<Product> getProducts() {
-        return productRepository.findAll();
-    }
+  public List<Product> getProducts() {
+    return productRepository.findAll();
+  }
 
-    public Product getProduct(Long id) {
-        return productRepository.findById(id)
-            .orElseThrow(() -> new ProductNotFoundException(id));
-    }
+  public Product getProduct(Long id) {
+    return findProduct(id);
+  }
 
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
-    }
+  public Product createProduct(ProductData productData) {
+    Product product = Product.builder()
+        .userId(productData.getUserId())
+        .content(productData.getContent())
+        .description(productData.getDescription())
+        .build();
+    return productRepository.save(product);
+  }
 
-    public Product updateProduct(Long id, Product source) {
-        Product product = productRepository.findById(id)
-            .orElseThrow(() -> new ProductNotFoundException(id));
-        product.setContent(source.getContent());
+  public Product updateProduct(Long id, ProductData productData) {
+    Product product = findProduct(id);
+    product.change(Product.builder()
+        .userId(productData.getUserId())
+        .content(productData.getContent())
+        .description(productData.getDescription())
+        .build());
+    return productRepository.save(product);
+  }
 
-        return product;
-    }
+  public Product deleteProduct(Long id) {
+    Product product = findProduct(id);
+    productRepository.delete(product);
 
-    public Product deleteProduct(Long id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id));
-        productRepository.delete(product);
+    return product;
+  }
 
-        return product;
-    }
+  private Product findProduct(Long id) {
+    return productRepository.findById(id)
+        .orElseThrow(() -> new ProductNotFoundException(id));
+  }
 }

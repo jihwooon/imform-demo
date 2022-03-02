@@ -8,6 +8,7 @@ package com.imform.demo.controller;
 
 import com.imform.demo.application.ProductService;
 import com.imform.demo.domain.Product;
+import com.imform.demo.dto.ProductData;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,36 +28,36 @@ import java.util.List;
 @CrossOrigin
 public class ProductController {
 
-    private final ProductService productService;
+  private final ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+  public ProductController(ProductService productService) {
+    this.productService = productService;
+  }
 
-    @GetMapping
-    public List<Product> list() {
-        return productService.getProducts();
-    }
+  @GetMapping
+  public List<Product> list() {
+    return productService.getProducts();
+  }
 
-    @GetMapping("{id}")
-    public Product detail(@PathVariable Long id) {
-        return productService.getProduct(id);
-    }
+  @GetMapping("{id}")
+  public Product detail(@PathVariable Long id) {
+    return productService.getProduct(id);
+  }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Product create(@RequestBody Product product) {
-        return productService.createProduct(product);
-    }
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public Product create(@RequestBody ProductData productData) {
+    return productService.createProduct(productData);
+  }
 
-    @PatchMapping("{id}")
-    public Product update(@PathVariable Long id, @RequestBody Product product) {
-        return productService.updateProduct(id, product);
-    }
+  @PatchMapping("{id}")
+  public Product update(@PathVariable Long id, @RequestBody ProductData productData) {
+    return productService.updateProduct(id, productData);
+  }
 
-    @DeleteMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        productService.deleteProduct(id);
-    }
+  @DeleteMapping("{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable Long id) {
+    productService.deleteProduct(id);
+  }
 }
