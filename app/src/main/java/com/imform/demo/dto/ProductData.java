@@ -1,28 +1,51 @@
 package com.imform.demo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.imform.demo.domain.Product;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductData {
 
-  @NotNull
-  @Size(min = 6)
-  private String userId;
+  @Getter
+  public class ProductCreate {
+    @NotNull
+    @Size(min = 6)
+    private String userId;
 
-  @NotBlank
-  private String content;
+    @NotBlank
+    private String content;
 
-  @NotBlank
-  private String description;
+    @NotBlank
+    private String description;
 
+  }
+
+  @Getter
+  public static class ProductUpdate {
+    @NotNull
+    @Size(min = 6)
+    private String userId;
+
+    @NotBlank
+    private String content;
+
+  }
+
+  @Getter
+  public static class ProductUserId {
+    private String userId;
+
+    public ProductUserId(Product product) {
+      this.userId = product.getUserId();
+    }
+
+    public static ProductUserId returnUserIdDto(Product product) {
+      return new ProductUserId(product);
+
+    }
+  }
 }

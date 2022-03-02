@@ -10,7 +10,6 @@ import com.imform.demo.application.ProductService;
 import com.imform.demo.domain.Product;
 import com.imform.demo.dto.ProductData;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,7 +24,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin
 public class ProductController {
 
   private final ProductService productService;
@@ -46,13 +44,13 @@ public class ProductController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Product create(@RequestBody ProductData productData) {
-    return productService.createProduct(productData);
+  public ProductData.ProductUserId create(@RequestBody ProductData.ProductCreate productCreate) {
+    return productService.createProduct(productCreate);
   }
 
   @PatchMapping("{id}")
-  public Product update(@PathVariable Long id, @RequestBody ProductData productData) {
-    return productService.updateProduct(id, productData);
+  public Product update(@PathVariable Long id, @RequestBody ProductData.ProductUpdate productUpdate) {
+    return productService.updateProduct(id, productUpdate);
   }
 
   @DeleteMapping("{id}")

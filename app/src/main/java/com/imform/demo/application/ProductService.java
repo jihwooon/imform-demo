@@ -31,21 +31,23 @@ public class ProductService {
     return findProduct(id);
   }
 
-  public Product createProduct(ProductData productData) {
+  public ProductData.ProductUserId createProduct(ProductData.ProductCreate productCreate) {
     Product product = Product.builder()
-        .userId(productData.getUserId())
-        .content(productData.getContent())
-        .description(productData.getDescription())
+        .userId(productCreate.getUserId())
+        .content(productCreate.getContent())
+        .description(productCreate.getDescription())
         .build();
-    return productRepository.save(product);
+
+    Product test = productRepository.save(product);
+
+    return ProductData.ProductUserId.returnUserIdDto(test);
   }
 
-  public Product updateProduct(Long id, ProductData productData) {
+  public Product updateProduct(Long id, ProductData.ProductUpdate productUpdate) {
     Product product = findProduct(id);
     product.change(Product.builder()
-        .userId(productData.getUserId())
-        .content(productData.getContent())
-        .description(productData.getDescription())
+        .userId(productUpdate.getUserId())
+        .content(productUpdate.getContent())
         .build());
     return productRepository.save(product);
   }
