@@ -23,12 +23,13 @@ public class ProductService {
     this.productRepository = productRepository;
   }
 
-  public List<Product> getProducts() {
-    return productRepository.findAll();
+  public List<ProductData.ProductUserId> getProducts() {
+    return ProductData.ProductUserId.returnUserIdDto(productRepository.findAll());
   }
 
-  public Product getProduct(Long id) {
-    return findProduct(id);
+  public ProductData.ProductUserId getProduct(Long id) {
+    Product detail = findProduct(id);
+    return ProductData.ProductUserId.returnUserIdDto(detail);
   }
 
   public ProductData.ProductUserId createProduct(ProductData.ProductCreate productCreate) {
@@ -38,18 +39,20 @@ public class ProductService {
         .description(productCreate.getDescription())
         .build();
 
-    Product test = productRepository.save(product);
+    Product create = productRepository.save(product);
 
-    return ProductData.ProductUserId.returnUserIdDto(test);
+    return ProductData.ProductUserId.returnUserIdDto(create);
   }
 
-  public Product updateProduct(Long id, ProductData.ProductUpdate productUpdate) {
+  public ProductData.ProductUserId updateProduct(Long id, ProductData.ProductUpdate productUpdate) {
     Product product = findProduct(id);
     product.change(Product.builder()
         .userId(productUpdate.getUserId())
         .content(productUpdate.getContent())
         .build());
-    return productRepository.save(product);
+    Product update = productRepository.save(product);
+
+    return ProductData.ProductUserId.returnUserIdDto(update);
   }
 
   public Product deleteProduct(Long id) {

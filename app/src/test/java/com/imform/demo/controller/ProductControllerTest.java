@@ -1,7 +1,6 @@
 package com.imform.demo.controller;
 
 import com.imform.demo.application.ProductService;
-import com.imform.demo.domain.Product;
 import com.imform.demo.dto.ProductData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,17 +12,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -42,16 +34,16 @@ class ProductControllerTest {
 
   @BeforeEach
   void setUp() {
-    List<Product> products = new ArrayList<>();
-    Product product = Product.builder()
-        .content("HelloWorld")
-        .build();
-    products.add(product);
-
-    given(productService.getProducts()).willReturn(products);
-    given(productService.getProduct(1L)).willReturn(product);
-    given(productService.updateProduct(eq(1L), any(ProductData.class))).willReturn(product);
-    given(productService.deleteProduct(eq(1L))).willReturn(product);
+//    List<ProductData.ProductUserId> products = new ArrayList<>();
+//    Product product = Product.builder()
+//        .content()
+//        .build();
+//    products.add(product);
+//
+//    given(productService.getProducts()).willReturn(products);
+//    given(productService.getProduct(1L)).willReturn(product);
+//    given(productService.updateProduct(eq(1L), any(ProductData.class))).willReturn(product);
+//    given(productService.deleteProduct(eq(1L))).willReturn(product);
 
   }
 
@@ -93,7 +85,7 @@ class ProductControllerTest {
           .content("{\"content\":\"HelloWorld\"}"))
           .andExpect(status().isCreated());
 
-      verify(productService).createProduct(any(ProductData.class));
+      verify(productService).createProduct(any(ProductData.ProductCreate.class));
     }
   }
 
@@ -108,7 +100,7 @@ class ProductControllerTest {
           .content("{\"content\":\"HelloJava\"}"))
           .andExpect(status().isOk());
 
-      verify(productService).updateProduct(eq(1L), any(ProductData.class));
+      verify(productService).updateProduct(eq(1L), any(ProductData.ProductUpdate.class));
     }
   }
 

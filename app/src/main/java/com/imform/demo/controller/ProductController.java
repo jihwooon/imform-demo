@@ -7,7 +7,6 @@
 package com.imform.demo.controller;
 
 import com.imform.demo.application.ProductService;
-import com.imform.demo.domain.Product;
 import com.imform.demo.dto.ProductData;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,12 +32,12 @@ public class ProductController {
   }
 
   @GetMapping
-  public List<Product> list() {
+  public List<ProductData.ProductUserId> list() {
     return productService.getProducts();
   }
 
   @GetMapping("{id}")
-  public Product detail(@PathVariable Long id) {
+  public ProductData.ProductUserId detail(@PathVariable Long id) {
     return productService.getProduct(id);
   }
 
@@ -49,7 +48,7 @@ public class ProductController {
   }
 
   @PatchMapping("{id}")
-  public Product update(@PathVariable Long id, @RequestBody ProductData.ProductUpdate productUpdate) {
+  public ProductData.ProductUserId update(@PathVariable Long id, @RequestBody ProductData.ProductUpdate productUpdate) {
     return productService.updateProduct(id, productUpdate);
   }
 
